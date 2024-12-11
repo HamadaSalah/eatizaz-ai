@@ -28,12 +28,15 @@ class FileInformationService
             ]);
 
             $fileInfoId = $fileInfo->id;
-            collect($data['urls'])->map(function ($url) use ($fileInfoId) {
-                File::create([
-                    'file_info_id' => $fileInfoId,
-                    'path' => $url,
-                ]);
-            });
+            
+            if($data['urls']) {
+                collect($data['urls'])->map(function ($url) use ($fileInfoId) {
+                    File::create([
+                        'file_info_id' => $fileInfoId,
+                        'path' => $url,
+                    ]);
+                });
+            }
 
             return 'The information saved successfully';
         } catch (\Exception $ex) {
